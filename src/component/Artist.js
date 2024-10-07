@@ -1,12 +1,7 @@
-import React , {useState , useEffect} from 'react'
-import data from './spotify_data.json'
+import React from 'react'
 
 function Artist() {
-  const [Database , setDatabase] = usestate([])
-  useEffect(() =>{
-    setDatabase(data)
-  },[]);
-    return (
+  return (
     <div>
       
     </div>
