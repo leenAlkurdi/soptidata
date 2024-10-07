@@ -1,7 +1,9 @@
 import React from 'react'
 
 function General() {
-  return (
+  
+  
+    return (
     <div>
       
     </div>
