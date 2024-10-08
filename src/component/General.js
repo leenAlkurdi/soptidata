@@ -89,7 +89,8 @@ const General = () => {
   const hourMostListening = (data) => {  
     const hourListening = [];  
     data.forEach((item) => {  
-      const hour = item.ts.split("T")[1].split(":")[0]; 
+      let hour = new Date(item.ts)
+      hour=hour.getHours()
       const existingHour = hourListening.find(h => h.hour === hour);  
       if (existingHour) {  
         existingHour.totalTime += item.ms_played;  
@@ -101,6 +102,15 @@ const General = () => {
     return hourListening.length > 0 ? hourListening[0].hour : null;  
   }; 
 
+  const TimeSpent =(data) =>{
+    let timespent = 0
+    for( let i = 0; i < data.length; i++ ){
+      timespent += data[i].ms_played
+    }
+    let finaltimespent = Math.floor(timespent/86400000)
+    return finaltimespent
+  }
+
   useEffect(() => {
     getData();
   }, []);
@@ -108,11 +118,12 @@ const General = () => {
   return (
     <div>
       {data.length > 0 ? (
-        <div>{dailyAvgTimeListening(test)} min</div>
+        <div>{dailyAvgTimeListening(data)} min</div>
       ) : (
         <div>No data available</div>
       )}
-      {hourMostListening(test)}
+      {hourMostListening(data)}
+      <p>{TimeSpent(data)}</p>
     </div>
   );
 };
