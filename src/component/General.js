@@ -11,7 +11,7 @@ function General() {
     for( let i = 0; i < data.length; i++ ){
       timespent += data[i].ms_played
     }
-    let finaltimespent = timespent/86400000
+    let finaltimespent = Math.floor(timespent/86400000)
     console.log(finaltimespent)
   }
   
