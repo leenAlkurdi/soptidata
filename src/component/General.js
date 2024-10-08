@@ -15,35 +15,10 @@ function General() {
     return playsCounter;
   };
 
-  // const hourMostListening = (data) => {  
-  //   const hourListening = [];  
-  //   data.forEach((item) => {  
-  //     const hour = item.ts.split("T")[1].split(":")[0]; 
-  //     const existingHour = hourListening.find(h => h.hour === hour);  
-  //     if (existingHour) {  
-  //       existingHour.totalTime += item.ms_played;  
-  //     } else {  
-  //       hourListening.push({ hour, totalTime: item.ms_played }); 
-  //     }  
-  //   });    
-  //   hourListening.sort((a, b) => b.totalTime - a.totalTime);   
-  //   return hourListening.length > 0 ? hourListening[0].hour : null;  
-  // }; 
+
 
   const seasonInYear = () => {
-    // const seasonLisening = [];
-    // jsonData.forEach((item) => {
-    //   const season = item.ts.slice(5, 10);
-    //   const existingHour = seasonLisening.find(s => s.season === season);  
-    //   if (existingHour) {
-    //     existingHour.totalTime += item.ms_played;
-    //   }
-    //   else {
-    //     seasonLisening.push({season, totalTime: item.ms_played});
-    //   }
-    // });
-    // seasonLisening.sort((a, b) => b.totalTime - a.totalTime);
-    // return seasonLisening.length > 0 ? seasonLisening[0].season : null;
+
 
     let winter = [];
     let spring = [];
