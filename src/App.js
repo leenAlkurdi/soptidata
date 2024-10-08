@@ -1,8 +1,9 @@
 import "./index.css"
+import General from './component/General';
 function App() {
   return (
     <div className="App">
-      <h1 className="text-red-300">Hasan</h1>
+      <General/>
     </div>
   );
 }
