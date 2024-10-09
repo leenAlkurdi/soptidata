@@ -126,18 +126,7 @@ const SpotiData = () => {
       summerListening,
       automnListening,
     ];
-    {
-      console.log(winterListening);
-    }
-    {
-      console.log(springListening);
-    }
-    {
-      console.log(summerListening);
-    }
-    {
-      console.log(automnListening);
-    }
+    
 
     if (seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) == 0) {
       return "Winter";

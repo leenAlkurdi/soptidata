@@ -20,7 +20,6 @@ const Lists = ({ data }) => {
 
   const toggleFilter = () => {
     setIsLastYear(!isLastYear);
-    console.log(isLastYear);
   };
 
   const toplist = (x, data) => {
@@ -47,9 +46,7 @@ return finaltop;
 };
 const handleToplistClick = (key) => {
   const results = toplist(key, displayedData);
-  console.log("Toplist Results:", results);
   setTopResults(results);
-  console.log(displayedData);
 };
   return (
     <div>
