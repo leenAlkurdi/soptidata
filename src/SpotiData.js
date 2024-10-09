@@ -45,7 +45,7 @@ const SpotiData = () => {
     );
   };
   const calculatePlays = (data) => {
-    return getSongs(data).length;
+    return data.length;
   };
 
   const calculateTraks = (data) => {
