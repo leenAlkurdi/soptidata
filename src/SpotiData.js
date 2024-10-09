@@ -40,10 +40,10 @@ const SpotiData = () => {
   };  
 
   const nonSkippedSongs = (data) => {  
-    return getSongs(data).filter((song) => song.skipped === null);  
+    return getSongs(data).filter((song) => song.skipped === null || song.skipped===false);  
   };  
   const calculatePlays = (data) => {  
-    return getSongs(data).length;  
+    return data.length;  
   }; 
 
 
