@@ -112,12 +112,7 @@ const General = ({
       automnListening += item.ms_played;
     });
 
-    let seasonsListening = [
-      winterListening,
-      springListening,
-      summerListening,
-      automnListening,
-    ];
+    let seasonsListening = [winterListening,springListening,summerListening,automnListening];
 
     if (seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) === 0) {
       return "Winter";
