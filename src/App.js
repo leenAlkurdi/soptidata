@@ -1,13 +1,12 @@
-import General from "./component/General";
-import Lists from "./component/Lists";
+import React from 'react';
+import SpotiData from './SpotiData'; 
 import "./index.css"
-function App() {
+const App = () => {
   return (
     <div className="App">
-     <General/>
-     {/* <Lists/> */}
+      <SpotiData />
     </div>
   );
-}
+};
 
 export default App;

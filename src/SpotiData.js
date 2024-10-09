@@ -1,60 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Sidebar from "./component/Sidebar";
+import General from "./component/General";
+import Artist from "./component/Artist";
+import Lists from "./component/Lists";
+import Footer from "./component/Footer";
+import Navbar from "./component/Navbar";
+import Podcast from "./component/Podcast";
 
 const SpotiData = () => {
   const [data, setData] = useState([]);
 
-  let test = [
-    {
-      _id: { $oid: "65b0306e4146088749465e39" },
-      ts: "2020-06-01T15:02:59Z",
-      ms_played: 224718,
-      master_metadata_track_name: "Antidote",
-      master_metadata_album_artist_name: "Travis Scott",
-      master_metadata_album_album_name: "Rodeo",
-      episode_name: null,
-      episode_show_name: null,
-      reason_start: "clickrow",
-      reason_end: "fwdbtn",
-      shuffle: true,
-      skipped: null,
-    },
-    {
-      _id: { $oid: "65b0306e4146088749465e3a" },
-      ts: "2020-06-01T15:05:41Z",
-      ms_played: 163053,
-      master_metadata_track_name: "Rozzi",
-      master_metadata_album_artist_name: "Paky",
-      master_metadata_album_album_name: "Rozzi",
-      episode_name: null,
-      episode_show_name: null,
-      reason_start: "fwdbtn",
-      reason_end: "trackdone",
-      shuffle: true,
-      skipped: null,
-    },
-  ];
-
-  const getData = () => {
-    fetch("/spotify_data.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
   useEffect(() => {
+    const getData = () => {
+      fetch("/spotify_data.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setData(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    };
+
     getData();
   }, []);
 
-  return <div>SpotiData</div>;
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex flex-1">
+        <Sidebar />
+        <div className="flex-1 p-8 bg-purple-50 min-h-screen transition duration-300">
+          <Routes>
+            <Route path="/" element={<General data={data} />} />
+            <Route path="/artists" element={<Artist data={data} />} />
+            <Route path="/podcasts" element={<Podcast data={data} />} />
+            <Route path="/lists" element={<Lists data={data} />} />
+          </Routes>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default SpotiData;
