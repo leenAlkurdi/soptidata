@@ -56,7 +56,7 @@ const Artist = ({
           <ArtistDetails   
             artistData={selectedArtist.artistInfo}   
             songs={selectedArtist.songs}   
-            allArtists={data} // Pass the full data here
+            allArtists={data}  
             onBack={() => setSelectedArtist(null)}   
           />  
         ) : (  
