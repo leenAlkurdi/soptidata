@@ -31,12 +31,6 @@ const SpotiData = () => {
     getData();  
   }, []);  
 
- 
-  const calculatePlays = (data) => {  
-    return getSongs(data).length;  
-  };  
-  const totalPlays = calculatePlays(data); 
-
   const getSongs = (data) => {  
     return data.filter((song) => song.episode_name === null);  
   };  
@@ -48,6 +42,12 @@ const SpotiData = () => {
   const nonSkippedSongs = (data) => {  
     return getSongs(data).filter((song) => song.skipped === null);  
   };  
+  const calculatePlays = (data) => {  
+    return getSongs(data).length;  
+  };  
+  const totalPlays = calculatePlays(data); 
+
+ 
 
   const TimeSpent = (data) => {
     let timespent = 0;
@@ -67,11 +67,11 @@ const SpotiData = () => {
           <Routes>  
             <Route   
               path="/"   
-              element={<General data={data} TimeSpent={TimeSpent} nonSkippedSongs={nonSkippedSongs} calculatePlays={calculatePlays} />}   
+              element={<General data={data} TimeSpent={TimeSpent} totalPlays={totalPlays} nonSkippedSongs={nonSkippedSongs} calculatePlays={calculatePlays} />}   
             />  
             <Route   
               path="/artists"   
-              element={<Artist data={data} TimeSpent={TimeSpent} calculatePlays={calculatePlays} />}   
+              element={<Artist data={data} TimeSpent={TimeSpent} totalPlays={totalPlays} calculatePlays={calculatePlays} />}   
             />  
             <Route   
               path="/podcasts"   
