@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const General = ({ data }) => {
-  const Plays = (data) => {
-    let songs = getSongs(data);
-    return songs.length;
-  };
+const General = ({ data,totalPlays,nonSkippedSongs,TimeSpent}) => {
 
-  const getSongs = (data) => {
-    return data.filter((song) => song.episode_name === null);
-  };
-
-  const getPodcasts = (data) => {
-    return data.filter((podcast) => podcast.episode_name !== null);
-  };
-
-  const nonSkippedSongs = (data) => {
-    return getSongs(data).filter((song) => song.skipped === null);
-  };
-
+  
   const dailyAvgTimeListening = (data) => {
     const songsList = nonSkippedSongs(data);
     let dailyListening = [];
@@ -63,14 +48,7 @@ const General = ({ data }) => {
     return hourListening.length > 0 ? hourListening[0].hour : null;
   };
 
-  const TimeSpent = (data) => {
-    let timespent = 0;
-    for (let i = 0; i < data.length; i++) {
-      timespent += data[i].ms_played;
-    }
-    let finaltimespent = Math.floor(timespent / 86400000);
-    return finaltimespent;
-  };
+  
 
   const seasonInYear = (data) => {
     let winter = [];
@@ -215,7 +193,7 @@ const General = ({ data }) => {
       ) : (
         <div>No data available</div>
       )}
-      <p>Plays: {Plays(data)}</p>
+       <p>Total Plays: {totalPlays}</p> 
       <p>Most Listening Hour: {hourMostListening(data)}</p>
       <p>Total Time Spent: {TimeSpent(data)} days</p>
       <p>Most Listening Season: {seasonInYear(data)}</p>

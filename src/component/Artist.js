@@ -1,15 +1,19 @@
 import React from 'react'
-import General from './General'
-
-const Artist = ({name}) => {
-
-const currentArtist=(data)=>{
-return data.filter((item)=>item.master_metadata_album_artist_name==name)
-}
-
-  return (
-    <div>Artist</div>
-  )
+const Artist = ({data,calculatePlays,totalPlays,TimeSpent}) => {
+const name="Rihanna"
+  const currentArtistData = data.filter(  
+    (item) => item.master_metadata_album_artist_name === name  
+  );  
+  const artistPlays =calculatePlays(currentArtistData)
+  const percentage = ((artistPlays / totalPlays) * 100)
+  return (  
+    <div>  
+      <h2>Artist: {name}</h2>  
+      <p>Total Plays: {artistPlays}</p> 
+      <p>Percentage of Total Plays: {percentage}%</p>  
+      <p>Total Time Spent: {TimeSpent(currentArtistData)} days</p>   
+    </div>  
+  );
 }
 
 export default Artist
