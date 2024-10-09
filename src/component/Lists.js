@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 const Lists = ({ data }) => {
-  const [isLastYear, setIsLastYear] = useState(false);
+  const [isLastYear, setIsLastYear] = useState(true);
   const [topResults, setTopResults] = useState([]);
+  const [displayedData, setDisplayedData] = useState(data);
+
 
   const filterByLastYear = (data) => {
     //  return data.filter((item) => item.ts.split("T")[0].split("-")[0] ==new Date().getFullYear())
     const currentYear = new Date().getFullYear();
     const lastYearTops = data.filter(
-      (item) => item.ts.split("T")[0].split("-")[0] == currentYear
+      (item) => new Date(item.ts).getFullYear() == currentYear
     );
     return lastYearTops;
   };
 
   const toggleFilter = () => {
-    setIsLastYear((prev) => !prev);
+    setIsLastYear(!isLastYear);
   };
 
   const toplist = (x, data) => {
@@ -62,44 +64,46 @@ const Lists = ({ data }) => {
   //   return finalTop;
   // };
 
-  const displayedData = isLastYear ? filterByLastYear(data) : data;
-
   const handleToplistClick = (key) => {
     const results = toplist(key, displayedData);
-    console.log("Toplist Results:", results); 
+    console.log("Toplist Results:", results);
     setTopResults(results);
   };
-
+  useEffect(() => {
+    const updatedData = isLastYear ? filterByLastYear(data) : data;
+    setDisplayedData(updatedData);
+  }, [isLastYear, data]);
   return (
     <div>
-      <button onClick={toggleFilter}>
-        {isLastYear ? "Show All Data" : "Show Last Year's Data"}
-      </button>
+       <button onClick={toggleFilter}>  
+        {isLastYear ? "Show All Data" : "Show Last Year's Data"}  
+      </button>  
       <div>
         <div>
           <button
-          onClick={() => handleToplistClick("master_metadata_track_name")}
-        >
-          Test Tracks
-        </button>
+            onClick={() => handleToplistClick("master_metadata_track_name")}
+          >
+            Test Tracks
+          </button>
         </div>
         <div>
           <button
-          onClick={() =>
-            handleToplistClick("master_metadata_album_artist_name")
-          }
-        >
-          Test Artists
-        </button>
+            onClick={() =>
+              handleToplistClick("master_metadata_album_artist_name")
+            }
+          >
+            Test Artists
+          </button>
         </div>
         <div>
           <button
-          onClick={() => handleToplistClick("master_metadata_album_album_name")}
-        >
-          Test Albums
-        </button>
+            onClick={() =>
+              handleToplistClick("master_metadata_album_album_name")
+            }
+          >
+            Test Albums
+          </button>
         </div>
-        
       </div>
       <div>
         <h3 className="text-red-500">Top Results:</h3>
