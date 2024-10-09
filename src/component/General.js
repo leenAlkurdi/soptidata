@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const General = ({ data,totalPlays,nonSkippedSongs,TimeSpent}) => {
+const General = ({ data,totalPlays,nonSkippedSongs,TimeSpent,calculateTraks}) => {
 
   
   const dailyAvgTimeListening = (data) => {
@@ -197,6 +197,7 @@ const General = ({ data,totalPlays,nonSkippedSongs,TimeSpent}) => {
       <p>Most Listening Hour: {hourMostListening(data)}</p>
       <p>Total Time Spent: {TimeSpent(data)} days</p>
       <p>Most Listening Season: {seasonInYear(data)}</p>
+      <p>Total Traks: {calculateTraks(data)}</p>
     </div>
   );
 };

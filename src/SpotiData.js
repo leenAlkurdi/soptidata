@@ -44,7 +44,19 @@ const SpotiData = () => {
   };  
   const calculatePlays = (data) => {  
     return getSongs(data).length;  
-  };  
+  }; 
+
+
+  const calculateTraks=(data)=>{
+    let songs=getSongs(data)
+    let traksName=songs.map((song)=>{
+      return song.master_metadata_track_name
+    })
+    let uniqueSongs=[...new Set(traksName)]
+    return uniqueSongs.length
+  } 
+
+
   const totalPlays = calculatePlays(data); 
 
  
@@ -67,7 +79,7 @@ const SpotiData = () => {
           <Routes>  
             <Route   
               path="/"   
-              element={<General data={data} TimeSpent={TimeSpent} totalPlays={totalPlays} nonSkippedSongs={nonSkippedSongs} calculatePlays={calculatePlays} />}   
+              element={<General data={data} calculateTraks={calculateTraks} TimeSpent={TimeSpent} totalPlays={totalPlays} nonSkippedSongs={nonSkippedSongs} calculatePlays={calculatePlays} />}   
             />  
             <Route   
               path="/artists"   
