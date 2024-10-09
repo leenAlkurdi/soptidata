@@ -66,6 +66,7 @@ const Lists = ({ data }) => {
 
   const handleToplistClick = (key) => {
     const results = toplist(key, displayedData);
+    console.log("Toplist Results:", results); 
     setTopResults(results);
   };
 
@@ -75,25 +76,33 @@ const Lists = ({ data }) => {
         {isLastYear ? "Show All Data" : "Show Last Year's Data"}
       </button>
       <div>
-        <button
-          onClick={() => handleToplistClick("master_metadata_track_name")}>
+        <div>
+          <button
+          onClick={() => handleToplistClick("master_metadata_track_name")}
+        >
           Test Tracks
         </button>
-        <button
+        </div>
+        <div>
+          <button
           onClick={() =>
             handleToplistClick("master_metadata_album_artist_name")
-          }>
+          }
+        >
           Test Artists
         </button>
-        <button
-          onClick={() =>
-            handleToplistClick("master_metadata_album_album_name")
-          }>
+        </div>
+        <div>
+          <button
+          onClick={() => handleToplistClick("master_metadata_album_album_name")}
+        >
           Test Albums
         </button>
+        </div>
+        
       </div>
       <div>
-        <h3>Top Results:</h3>
+        <h3 className="text-red-500">Top Results:</h3>
         <ul>
           {topResults.map((item, index) => (
             <li key={index}>
