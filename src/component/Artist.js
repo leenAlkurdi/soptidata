@@ -11,7 +11,6 @@ const Artist = ({
 }) => {  
   const [search, setSearch] = useState("");  
   const [selectedArtist, setSelectedArtist] = useState(null);  
-  const artistsPerPage = 12;  
   
   const uniqueArtists = [  
     ...new Set(data.map((item) => item.master_metadata_album_artist_name)),  
@@ -20,8 +19,6 @@ const Artist = ({
   const filteredArtists = uniqueArtists.filter(  
     (name) => name && name.toLowerCase().includes(search.toLowerCase())  
   );  
-
-  const currentArtists = filteredArtists.slice(0, artistsPerPage); 
 
   const handleArtistClick = (name) => {  
     const currentArtistData = data.filter(  
@@ -63,8 +60,8 @@ const Artist = ({
             onBack={() => setSelectedArtist(null)}   
           />  
         ) : (  
-          currentArtists.length > 0 ? (
-            currentArtists.map((name) => (  
+          filteredArtists.length > 0 ? (
+            filteredArtists.map((name) => (  
               <div  
                 key={name}  
                 className="bg-white rounded-lg shadow-md m-4 p-4 w-72 cursor-pointer hover:shadow-lg transition"  
