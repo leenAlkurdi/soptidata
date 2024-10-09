@@ -39,7 +39,7 @@ const Artist = ({
           );
           const artistPlays = calculatePlays(currentArtistData);
           const percentage = ((artistPlays * 100) / totalPlays).toFixed(2);
-
+        
           return (
             <div
               key={name}

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 const Lists = ({ data }) => {
-  const [isLastYear, setIsLastYear] = useState(true);
+  const [isLastYear, setIsLastYear] = useState(false);
   const [topResults, setTopResults] = useState([]);
   const [displayedData, setDisplayedData] = useState(data);
-
-
+  
+  useEffect(() => {
+    const updatedData = isLastYear ? filterByLastYear(data) : data;
+    setDisplayedData(updatedData);
+  }, [isLastYear, data]);
+  
   const filterByLastYear = (data) => {
-    //  return data.filter((item) => item.ts.split("T")[0].split("-")[0] ==new Date().getFullYear())
     const currentYear = new Date().getFullYear();
     const lastYearTops = data.filter(
       (item) => new Date(item.ts).getFullYear() == currentYear
@@ -17,6 +20,7 @@ const Lists = ({ data }) => {
 
   const toggleFilter = () => {
     setIsLastYear(!isLastYear);
+    console.log(isLastYear);
   };
 
   const toplist = (x, data) => {
@@ -24,6 +28,7 @@ const Lists = ({ data }) => {
     let nodup = item.filter(
       (value, index) => item.indexOf(value) === index && value !== null
     );
+    
     let finalplaytime = [];
     nodup.forEach((e) => {
       finalplaytime.push({
@@ -34,45 +39,18 @@ const Lists = ({ data }) => {
     finalplaytime.map((e) =>
       data.map((item) =>
         e.name === item[x] ? (e.playtime += item.ms_played) : null
-      )
-    );
-    finalplaytime.sort((a, b) => b.playtime - a.playtime);
-    let finaltop = finalplaytime.slice(0, 100);
-    return finaltop;
-  };
-
-  // const toplist = (key, data) => {
-  //   const playtimeArray = [];
-
-  //   data.forEach((item) => {
-  //     const value = item[key];
-
-  //     if (value) {
-  //       const existing = playtimeArray.find((entry) => entry.name === value);
-  //       if (existing) {
-  //         existing.playtime += item.ms_played;
-  //       } else {
-  //         playtimeArray.push({ name: value, playtime: item.ms_played });
-  //       }
-  //     }
-  //   });
-
-  //   const finalTop = playtimeArray
-  //     .sort((a, b) => b.playtime - a.playtime)
-  //     .slice(0, 100);
-
-  //   return finalTop;
-  // };
-
-  const handleToplistClick = (key) => {
-    const results = toplist(key, displayedData);
-    console.log("Toplist Results:", results);
-    setTopResults(results);
-  };
-  useEffect(() => {
-    const updatedData = isLastYear ? filterByLastYear(data) : data;
-    setDisplayedData(updatedData);
-  }, [isLastYear, data]);
+  )
+);
+finalplaytime.sort((a, b) => b.playtime - a.playtime);
+let finaltop = finalplaytime.slice(0, 100);
+return finaltop;
+};
+const handleToplistClick = (key) => {
+  const results = toplist(key, displayedData);
+  console.log("Toplist Results:", results);
+  setTopResults(results);
+  console.log(displayedData);
+};
   return (
     <div>
        <button onClick={toggleFilter}>  
