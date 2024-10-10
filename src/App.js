@@ -1,10 +1,12 @@
+import React from 'react';
+import SpotiData from './SpotiData'; 
 import "./index.css"
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <h1 className="text-red-300">Mohamad</h1>
+      <SpotiData />
     </div>
   );
-}
+};
 
 export default App;
