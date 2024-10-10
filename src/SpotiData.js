@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Sidebar from "./component/Sidebar";
 import General from "./component/General";
 import Artist from "./component/Artist";
 import Lists from "./component/Lists";
 import Footer from "./component/Footer";
-import Navbar from "./component/Navbar";
 import Podcast from "./component/Podcast";
-
 const SpotiData = () => {
   const [data, setData] = useState([]);
 
@@ -44,124 +42,60 @@ const SpotiData = () => {
       (song) => song.skipped === null || song.skipped === false
     );
   };
+
   const calculatePlays = (data) => {
     return data.length;
   };
 
-  const calculateTraks = (data) => {
+  const calculateTracks = (data) => {
     let songs = getSongs(data);
-    let traksName = songs.map((song) => {
-      return song.master_metadata_track_name;
-    });
-    let uniqueSongs = [...new Set(traksName)];
+    let trackNames = songs.map((song) => song.master_metadata_track_name);
+    let uniqueSongs = [...new Set(trackNames)];
     return uniqueSongs.length;
   };
 
   const totalPlays = calculatePlays(data);
 
-  const TimeSpent = (data) => {
-    let timespent = 0;
-    for (let i = 0; i < data.length; i++) {
-      timespent += data[i].ms_played;
-    }
-    let finaltimespent = Math.floor(timespent / 86400000);
-    return finaltimespent;
+  const timeSpent = (data) => {
+    let totalSpent = data.reduce((acc, song) => acc + song.ms_played, 0);
+    return Math.floor(totalSpent / 86400000); // Convert milliseconds to days
   };
 
   const seasonInYear = (data) => {
-    let winter = [];
-    let spring = [];
-    let summer = [];
-    let automn = [];
+    const seasons = { winter: 0, spring: 0, summer: 0, autumn: 0 };
 
-    for (let i = 0; i < data.length; i++) {
-      if (
-        data[i].ts.slice(5, 7) === "12" ||
-        data[i].ts.slice(5, 7) === "01" ||
-        data[i].ts.slice(5, 7) === "02"
-      ) {
-        winter[i] = data[i];
-      } else if (
-        data[i].ts.slice(5, 7) === "03" ||
-        data[i].ts.slice(5, 7) === "04" ||
-        data[i].ts.slice(5, 7) === "05"
-      ) {
-        spring[i] = data[i];
-      } else if (
-        data[i].ts.slice(5, 7) === "06" ||
-        data[i].ts.slice(5, 7) === "07" ||
-        data[i].ts.slice(5, 7) === "08"
-      ) {
-        summer[i] = data[i];
-      } else if (
-        data[i].ts.slice(5, 7) === "09" ||
-        data[i].ts.slice(5, 7) === "10" ||
-        data[i].ts.slice(5, 7) === "11"
-      ) {
-        automn[i] = data[i];
+    data.forEach((item) => {
+      const month = item.ts.slice(5, 7);
+      if (["12", "01", "02"].includes(month)) {
+        seasons.winter += item.ms_played;
+      } else if (["03", "04", "05"].includes(month)) {
+        seasons.spring += item.ms_played;
+      } else if (["06", "07", "08"].includes(month)) {
+        seasons.summer += item.ms_played;
+      } else if (["09", "10", "11"].includes(month)) {
+        seasons.autumn += item.ms_played;
       }
-    }
-
-    let winterListening = 0;
-    let springListening = 0;
-    let summerListening = 0;
-    let automnListening = 0;
-
-    winter.forEach((item) => {
-      winterListening += item.ms_played;
-    });
-    spring.forEach((item) => {
-      springListening += item.ms_played;
-    });
-    summer.forEach((item) => {
-      summerListening += item.ms_played;
-    });
-    automn.forEach((item) => {
-      automnListening += item.ms_played;
     });
 
-    let seasonsListening = [
-      winterListening,
-      springListening,
-      summerListening,
-      automnListening,
-    ];
-    
-
-    if (seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) == 0) {
-      return "Winter";
-    } else if (
-      seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) == 1
-    ) {
-      return "Spring";
-    } else if (
-      seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) == 2
-    ) {
-      return "Summer";
-    } else if (
-      seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) == 3
-    ) {
-      return "Automn";
-    }
+    return Object.keys(seasons).reduce((a, b) => (seasons[a] > seasons[b] ? a : b));
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <div className="flex flex-1">
         <Sidebar />
         <div className="flex-1 p-8 bg-purple-50 min-h-screen transition duration-300">
           <Routes>
+          <Route path="/" element={<Navigate to="/general" />} /> 
             <Route
-              path="/"
+              path="/general"
               element={
                 <General
                   data={data}
-                  calculateTraks={calculateTraks}
-                  TimeSpent={TimeSpent}
+                  calculateTracks={calculateTracks}
+                  timeSpent={timeSpent}
                   totalPlays={totalPlays}
                   nonSkippedSongs={nonSkippedSongs}
-                  calculatePlays={calculatePlays}
                   seasonInYear={seasonInYear}
                 />
               }
@@ -171,10 +105,9 @@ const SpotiData = () => {
               element={
                 <Artist
                   data={data}
-                  calculateTraks={calculateTraks}
-                  TimeSpent={TimeSpent}
+                  calculateTracks={calculateTracks}
+                  timeSpent={timeSpent}
                   totalPlays={totalPlays}
-                  calculatePlays={calculatePlays}
                   seasonInYear={seasonInYear}
                 />
               }

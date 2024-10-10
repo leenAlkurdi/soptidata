@@ -51,7 +51,7 @@ const ArtistDetails = ({ artistData, songs, allArtists, onBack }) => {
   const artistPosition = calculateArtistPosition(artistData.name);
 
   return (
-    <div className="bg-white rounded-lg shadow-md m-4 p-4 w-full md:w-72">
+    <div className="bg-white rounded-lg shadow-md m-4 p-4 w-full md:w-72 lg:w-96">
       <h2 className="text-xl font-semibold">Artist: {artistData.name}</h2>
       <p className="text-gray-700">Total Plays: {artistPlays}</p>
       <p className="text-gray-700">Percentage of Total Plays: {percentage}%</p>

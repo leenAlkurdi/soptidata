@@ -11,11 +11,13 @@ const Artist = ({
 }) => {  
   const [search, setSearch] = useState("");  
   const [selectedArtist, setSelectedArtist] = useState(null);  
-  
+  const [currentPage, setCurrentPage] = useState(0);  
+  const artistsPerPage = 12;  
+
   const uniqueArtists = [  
     ...new Set(data.map((item) => item.master_metadata_album_artist_name)),  
   ];  
- 
+
   const filteredArtists = uniqueArtists.filter(  
     (name) => name && name.toLowerCase().includes(search.toLowerCase())  
   );  
@@ -37,21 +39,28 @@ const Artist = ({
     setSelectedArtist({ artistInfo, songs: currentArtistData });  
   };  
 
+  const totalArtists = filteredArtists.length;  
+  const totalPages = Math.ceil(totalArtists / artistsPerPage);  
+  const currentArtists = filteredArtists.slice(currentPage * artistsPerPage, (currentPage + 1) * artistsPerPage);  
+
   return (  
     <div className="container mx-auto my-8 px-4">  
       <h1 className="text-2xl font-bold text-center mb-6">Artists</h1>  
 
-      <div className="mb-4">  
-        <input  
-          type="text"  
-          placeholder="Search by artist name..."  
-          className="border rounded-lg p-2 w-full"  
-          value={search}  
-          onChange={(e) => setSearch(e.target.value || "")}  
-        />  
-      </div>  
+      {/* Only show the search bar if no artist is selected */}
+      {!selectedArtist && (
+        <div className="mb-4">  
+          <input  
+            type="text"  
+            placeholder="Search by artist name..."  
+            className="border rounded-lg p-2 w-full md:w-1/2 lg:w-1/3 mx-auto"  
+            value={search}  
+            onChange={(e) => setSearch(e.target.value || "")}  
+          />  
+        </div>  
+      )}
 
-      <div className="flex flex-wrap justify-center">  
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">  
         {selectedArtist ? (  
           <ArtistDetails   
             artistData={selectedArtist.artistInfo}   
@@ -60,14 +69,14 @@ const Artist = ({
             onBack={() => setSelectedArtist(null)}   
           />  
         ) : (  
-          filteredArtists.length > 0 ? (
-            filteredArtists.map((name) => (  
+          currentArtists.length > 0 ? (
+            currentArtists.map((name) => (  
               <div  
                 key={name}  
-                className="bg-white rounded-lg shadow-md m-4 p-4 w-72 cursor-pointer hover:shadow-lg transition"  
+                className="bg-white rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition transform hover:scale-105"  
                 onClick={() => handleArtistClick(name)}  
               >  
-                <h2 className="text-xl font-semibold">Artist: {name}</h2>  
+                <h2 className="text-xl font-semibold truncate">Artist: {name}</h2>  
               </div>  
             ))  
           ) : (  
@@ -75,6 +84,25 @@ const Artist = ({
           )  
         )}  
       </div>  
+
+      {!selectedArtist && totalPages > 1 && (  
+        <div className="flex justify-between mt-4">  
+          <button 
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))} 
+            disabled={currentPage === 0} 
+            className="bg-green-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button 
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))} 
+            disabled={currentPage >= totalPages - 1} 
+            className="bg-green-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>  
   );  
 };  
