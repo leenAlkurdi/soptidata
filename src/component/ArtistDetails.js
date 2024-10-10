@@ -83,7 +83,7 @@ const ArtistDetails = ({ artistData, songs, allArtists, onBack }) => {
         )}
       </ul>
 
-      <button className="mt-2 text-[#4ac776]" onClick={onBack}>
+      <button className="mt-2 text-[]" onClick={onBack}>
         Back to Artist List
       </button>
     </div>
