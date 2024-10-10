@@ -1,10 +1,16 @@
-import "./index.css"
-function App() {
-  return (
-    <div className="App">
-      <h1 className="text-red-300">Mohamad</h1>
-    </div>
-  );
-}
+import React from "react";  
+import { BrowserRouter as Router } from "react-router-dom"; 
+import SpotiData from "./SpotiData";  
+import "./index.css";  
+
+const App = () => {  
+  return (  
+    <div className="App">  
+      <Router>  
+        <SpotiData />  
+      </Router>  
+    </div>  
+  );  
+};  
 
 export default App;
