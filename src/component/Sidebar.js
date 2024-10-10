@@ -20,14 +20,20 @@ const Sidebar = () => {
         </li>
         <li>
           <button className="font-bold w-[150px] h-[60px] rounded-3xl transition ease-in-out hover:-translate-y-3 hover:scale-110 hover:bg-[#0e5c2a] hover:shadow-[0_10px_10px_3px_rgba(0,0,0,0.3)]">
-            <Link to="/artists" className="text-2xl text-white hover:text-white">
+            <Link
+              to="/artists"
+              className="text-2xl text-white hover:text-white"
+            >
               Artists
             </Link>
           </button>
         </li>
         <li>
           <button className="font-bold w-[150px] h-[60px] rounded-3xl transition ease-in-out hover:-translate-y-3 hover:scale-110 hover:bg-[#0e5c2a] hover:shadow-[0_10px_10px_3px_rgba(0,0,0,0.3)]">
-            <Link to="/podcasts" className="text-2xl text-white hover:text-white">
+            <Link
+              to="/podcasts"
+              className="text-2xl text-white hover:text-white"
+            >
               Podcasts
             </Link>
           </button>

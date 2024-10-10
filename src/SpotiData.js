@@ -126,9 +126,10 @@ const SpotiData = () => {
       summerListening,
       automnListening,
     ];
-    
 
-    if (seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) === 0) {
+    if (
+      seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) === 0
+    ) {
       return "Winter";
     } else if (
       seasonsListening.indexOf(Math.max.apply(null, seasonsListening)) === 1
@@ -196,3 +197,4 @@ const SpotiData = () => {
 };
 
 export default SpotiData;
+d60fe;
